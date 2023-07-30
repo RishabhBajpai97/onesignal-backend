@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 	"reflect"
 
 	"github.com/julienschmidt/httprouter"
@@ -18,7 +19,7 @@ func SendNotification() httprouter.Handle {
 		valueType := reflect.TypeOf(id["id"])
 		fmt.Println(valueType)
 		notification := map[string]interface{}{
-			"app_id":   "a97f9aed-da4e-4961-b351-9e3073068021",
+			"app_id":   os.Getenv("APP_ID"),
 			"contents": map[string]string{"en": fmt.Sprintf("Hello %s", id["id"])},
 			// "included_segments": []string{"All"},
 			"include_external_user_ids": []string{id["id"]},
@@ -39,7 +40,7 @@ func SendNotification() httprouter.Handle {
 		}
 		// Set the OneSignal REST API key as an Authorization header
 		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("Authorization", "Basic OTQ1YWU5YzgtM2RmMC00YzIzLTlhNjQtYjY3ZTk3NWI5N2Fi")
+		req.Header.Set("Authorization", os.Getenv("ONESIGNAL_TOKEN"))
 
 		// Send the request
 		client := &http.Client{}

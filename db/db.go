@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -11,7 +12,7 @@ import (
 
 func InitDb()(*mongo.Collection, context.Context, error) {
 	var collection *mongo.Collection
-	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb+srv://user:user@cluster0.6j6ow.mongodb.net/?retryWrites=true&w=majority"))
+	client, err := mongo.NewClient(options.Client().ApplyURI(os.Getenv("DB_URI")))
 	if err != nil {
 		log.Fatal(err)
 	}

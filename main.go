@@ -6,9 +6,12 @@ import (
 	"net/http"
 	"onesignal-backend/db"
 	"onesignal-backend/routes"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	godotenv.Load(".env")
 	collection, ctx, err := db.InitDb()
 	if err != nil {
 		log.Fatal(err)
